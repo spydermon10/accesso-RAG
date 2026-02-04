@@ -42,7 +42,7 @@ retriever = db.as_retriever(search_kwargs={"k": 4})
 
 # ✅ RAG Prompt (strict context usage)
 template = """
-You are a medical assistant. Use ONLY the context provided.
+You are a Course assistant who solves student query based on. Use ONLY the context provided.
 If the answer is not in the context reply:
 "I don't know. Please provide more information, as your question seems to be out of my scope."
 If you think the question was not related to the context, politely inform the user that you can only answer questions related to the provided context.
@@ -79,7 +79,7 @@ def run_rag(query):
 
 @app.get("/")
 def home():
-    return {"message": "✅ Medisage RAG Backend Running Successfully"}
+    return {"message": "✅ Accesso RAG Backend Running Successfully"}
 
 
 @app.post("/chat")
@@ -87,12 +87,13 @@ async def chat(request: dict):
     question = request.get("question", "")
     answer, docs = run_rag(question)
 
-    sources = [
-        {
-            "source": d.metadata.get("source", "Unknown"),
-            "page": d.metadata.get("page", "?")
-        }
-        for d in docs
-    ]
+    # sources = [
+    #     {
+    #         "source": d.metadata.get("source", "Unknown"),
+    #         "page": d.metadata.get("page", "?")
+    #     }
+    #     for d in docs
+    # ]
 
-    return {"answer": answer, "sources": sources}
+    # return {"answer": answer, "sources": sources}
+    return {"answer": answer}
